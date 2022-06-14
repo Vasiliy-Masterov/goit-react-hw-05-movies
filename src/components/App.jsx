@@ -33,6 +33,10 @@ export class App extends Component {
       number: this.state.number,
     };
     const arrayContacts = this.state.contacts;
+    const arrayNames = arrayContacts.map(contact => contact.name);
+    if (arrayNames.includes(this.state.name)) {
+      return alert(`${this.state.name} is already in contacts`);
+    }
     arrayContacts.push(contactItem);
     this.setState({ contacts: arrayContacts });
     this.setState({ name: '', number: '' });
@@ -40,6 +44,15 @@ export class App extends Component {
 
   handleFindContacts = event => {
     this.setState({ filter: event.target.value });
+  };
+
+  handleDeleteContact = event => {
+    const value = event.target.name;
+    const arrayContacts = this.state.contacts;
+    const arrayNames = arrayContacts.map(item => item.name);
+    const index = arrayNames.indexOf(value);
+    arrayContacts.splice(index, 1);
+    this.setState({ contacts: arrayContacts });
   };
 
   render() {
@@ -72,7 +85,10 @@ export class App extends Component {
         />
         <h2>Contacts</h2>
         <Filter filter={filter} handleFindContacts={this.handleFindContacts} />
-        <ContactList arrayWhithFindedContacts={arrayWhithFindedContacts} />
+        <ContactList
+          arrayWhithFindedContacts={arrayWhithFindedContacts}
+          handleDeleteContact={this.handleDeleteContact}
+        />
       </div>
     );
   }
