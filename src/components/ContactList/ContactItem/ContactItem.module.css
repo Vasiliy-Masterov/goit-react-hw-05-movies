@@ -1,0 +1,15 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin-bottom: 20px;
+}
+
+.item_data {
+  font-size: 30px;
+}
+
+.item_button {
+  padding: 5px;
+  font-size: 20px;
+}

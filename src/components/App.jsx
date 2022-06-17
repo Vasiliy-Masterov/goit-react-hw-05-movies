@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm';
 import { Filter } from './Filter';
 import { ContactList } from './ContactList';
+import styles from './App.module.css';
 
 export class App extends Component {
   state = {
@@ -13,33 +13,16 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleInputChangeName = event => {
-    this.setState({ name: event.target.value });
-  };
-
-  handleInputChangeNumber = event => {
-    this.setState({ number: event.target.value });
-  };
-
-  handleOnSubmit = event => {
-    event.preventDefault();
-    const contactItem = {
-      id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
-    };
+  handleAddContact = contactData => {
     const arrayContacts = this.state.contacts;
     const arrayNames = arrayContacts.map(contact => contact.name);
-    if (arrayNames.includes(this.state.name)) {
-      return alert(`${this.state.name} is already in contacts`);
+    if (arrayNames.includes(contactData.name)) {
+      return alert(`${contactData.name} is already in contacts`);
     }
-    arrayContacts.push(contactItem);
+    arrayContacts.push(contactData);
     this.setState({ contacts: arrayContacts });
-    this.setState({ name: '', number: '' });
   };
 
   handleFindContacts = event => {
@@ -48,11 +31,11 @@ export class App extends Component {
 
   handleDeleteContact = event => {
     const value = event.target.name;
-    const arrayContacts = this.state.contacts;
-    const arrayNames = arrayContacts.map(item => item.name);
-    const index = arrayNames.indexOf(value);
-    arrayContacts.splice(index, 1);
-    this.setState({ contacts: arrayContacts });
+    const contactList = this.state.contacts;
+    const nameList = contactList.map(item => item.name);
+    const index = nameList.indexOf(value);
+    contactList.splice(index, 1);
+    this.setState({ contacts: contactList });
   };
 
   render() {
@@ -64,30 +47,14 @@ export class App extends Component {
     });
 
     return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
-        <h2>Phonebook</h2>
-        <ContactForm
-          handleOnSubmit={this.handleOnSubmit}
-          handleInputChangeName={this.handleInputChangeName}
-          handleInputChangeNumber={this.handleInputChangeNumber}
-          nameValue={this.state.name}
-          numberValue={this.state.number}
-        />
-        <h2>Contacts</h2>
-        <Filter filter={filter} handleFindContacts={this.handleFindContacts} />
+      <div className={styles.app_container}>
+        <h2 className={styles.title_phonebook}>Phonebook</h2>
+        <ContactForm addContact={this.handleAddContact} />
+        <h2 className={styles.title_contacts}>Contacts</h2>
+        <Filter filter={filter} findContacts={this.handleFindContacts} />
         <ContactList
-          arrayWhithFindedContacts={arrayWhithFindedContacts}
-          handleDeleteContact={this.handleDeleteContact}
+          arrayContacts={arrayWhithFindedContacts}
+          deleteContact={this.handleDeleteContact}
         />
       </div>
     );
