@@ -3,7 +3,7 @@ import styles from './ContactItem.module.css';
 
 export const ContactItem = ({ id, name, number, deleteContact }) => {
   return (
-    <li className={styles.item} key={id}>
+    <li className={styles.item} key={id} id={id}>
       <span className={styles.item_data}>
         {name}: {number}
       </span>
@@ -22,6 +22,6 @@ export const ContactItem = ({ id, name, number, deleteContact }) => {
 ContactItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
+  number: PropTypes.string.isRequired,
   deleteContact: PropTypes.func,
 };
