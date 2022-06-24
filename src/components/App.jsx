@@ -62,7 +62,7 @@ export class App extends Component {
 
     return (
       <div className={styles.app_container}>
-        <h2 className={styles.title_phonebook}>Phonebook hello</h2>
+        <h2 className={styles.title_phonebook}>Phonebook</h2>
         <ContactForm addContact={this.handleAddContact} />
         <h2 className={styles.title_contacts}>Contacts</h2>
         <Filter filter={filter} findContacts={this.handleFindContacts} />
