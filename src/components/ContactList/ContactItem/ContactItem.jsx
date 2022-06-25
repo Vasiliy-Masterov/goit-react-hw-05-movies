@@ -3,13 +3,13 @@ import styles from './ContactItem.module.css';
 
 export const ContactItem = ({ id, name, number, deleteContact }) => {
   return (
-    <li className={styles.item} key={id} id={id}>
+    <li className={styles.item} key={id}>
       <span className={styles.item_data}>
         {name}: {number}
       </span>
       <button
         className={styles.item_button}
-        name={name}
+        id={id}
         type="button"
         onClick={deleteContact}
       >

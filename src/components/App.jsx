@@ -4,6 +4,8 @@ import { Filter } from './Filter';
 import { ContactList } from './ContactList';
 import styles from './App.module.css';
 
+//localStorage.removeItem('contacts');
+
 export class App extends Component {
   state = {
     contacts: [
@@ -16,27 +18,24 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    const parseContacts = JSON.parse(localStorage.getItem('contacts'));
-    if (parseContacts) {
-      this.setState({ contacts: parseContacts });
+    const contactsFromStorage = JSON.parse(localStorage.getItem('contacts'));
+    if (contactsFromStorage) {
+      this.setState({ contacts: contactsFromStorage });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { contacts } = this.state;
-    if (contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
   }
 
   handleAddContact = contactData => {
-    const arrayContacts = this.state.contacts;
-    const arrayNames = arrayContacts.map(contact => contact.name);
+    const arrayNames = this.state.contacts.map(contact => contact.name);
     if (arrayNames.includes(contactData.name)) {
       return alert(`${contactData.name} is already in contacts`);
     }
-    arrayContacts.push(contactData);
-    this.setState({ contacts: arrayContacts });
+    this.setState(prev => ({ contacts: [...prev.contacts, contactData] }));
   };
 
   handleFindContacts = event => {
@@ -44,12 +43,11 @@ export class App extends Component {
   };
 
   handleDeleteContact = event => {
-    const value = event.target.name;
     const contactList = this.state.contacts;
-    const nameList = contactList.map(item => item.name);
-    const index = nameList.indexOf(value);
+    const idList = contactList.map(item => item.id);
+    const index = idList.indexOf(event.target.id);
     contactList.splice(index, 1);
-    this.setState({ contacts: contactList });
+    this.setState({ contacts: [...contactList] });
   };
 
   render() {
@@ -68,6 +66,7 @@ export class App extends Component {
         <Filter filter={filter} findContacts={this.handleFindContacts} />
         <ContactList
           arrayContacts={arrayWhithFindedContacts}
+          //deleteContact={this.deleteContact}
           deleteContact={this.handleDeleteContact}
         />
       </div>
