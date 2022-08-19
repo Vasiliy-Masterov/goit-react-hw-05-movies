@@ -12,7 +12,6 @@ const PIXABAY_KEY = '25809714-fb9ca043e2372697e049be88c';
 
 const BASE_URL = 'https://pixabay.com/api/';
 
-//export class App extends Component {
 export const App = () => {
   const [imageGallery, setImageGallery] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
