@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Notiflix from 'notiflix';
 import styles from './App.module.css';
@@ -16,7 +16,6 @@ const BASE_URL = 'https://pixabay.com/api/';
 export const App = () => {
   const [imageGallery, setImageGallery] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  //const [pageLimit, setPageLimit]=useState(12);
   const [numberPage, setNumberPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isShow, setIsShow] = useState(false);

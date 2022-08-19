@@ -9,12 +9,9 @@
 
 import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export const Modal = ({ source, alt, closeModal }) => {
-  // const handleModalClose=(event)=>{
-  //   console.log('handleModalClose');
-  // };
   useEffect(() => {
     const handleKeyDown = event => {
       if (event.code === 'Escape') {
@@ -37,5 +34,7 @@ export const Modal = ({ source, alt, closeModal }) => {
 };
 
 Modal.propTypes = {
-  img: PropTypes.string,
+  source: PropTypes.string,
+  alt: PropTypes.string,
+  closeModal: PropTypes.func,
 };
