@@ -40,7 +40,10 @@ export const App = () => {
             page: numberPage,
           },
         });
-        console.log(respons.data.hits);
+        if (respons.data.hits.length === 0) {
+          Notiflix.Notify.warning('Nothing found');
+          return;
+        }
         setImageGallery([...imageGallery, ...respons.data.hits]);
       } catch {
         Notiflix.Notify.failure("Sorry, it's error");
@@ -58,10 +61,12 @@ export const App = () => {
 
   const hundleOnSubmit = event => {
     event.preventDefault();
-    console.log(event.currentTarget);
     const value = event.currentTarget.elements.search.value;
+    if (value.trim() === '') {
+      Notiflix.Notify.warning('Please, enter a search term');
+      return;
+    }
     if (searchQuery !== value) {
-      console.log('searchQuery!==value');
       setNumberPage(1);
       setImageGallery([]);
     }
@@ -69,16 +74,12 @@ export const App = () => {
   };
 
   const handleShowLargeImage = event => {
-    console.log('handleShowLargeImage');
-    console.log(event.currentTarget.srcset);
-    console.log(event.currentTarget.alt);
     setLargeImgURL(event.currentTarget.srcset);
     setTagsImg(event.currentTarget.alt);
     setIsShow(true);
   };
 
   const handleCloseModal = () => {
-    console.log('handleCloseModal');
     setIsShow(false);
   };
 
@@ -90,7 +91,9 @@ export const App = () => {
         showLargeImage={handleShowLargeImage}
       />
       {isLoading && <Loader />}
-      {imageGallery.length !== 0 && <Button loadNextPage={handleNextPage} />}
+      {(imageGallery.length !== 0) & !isLoading ? (
+        <Button loadNextPage={handleNextPage} />
+      ) : null}
       {isShow && (
         <Modal
           source={largeImgURL}

@@ -19,5 +19,6 @@ export const ImageGallery = ({ imageGallery, showLargeImage }) => {
 };
 
 ImageGallery.propTypes = {
-  img: PropTypes.string,
+  imageGallery: PropTypes.array.isRequired,
+  showLargeImage: PropTypes.func.isRequired,
 };
