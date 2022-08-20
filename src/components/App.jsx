@@ -44,7 +44,10 @@ export const App = () => {
           Notiflix.Notify.warning('Nothing found');
           return;
         }
-        setImageGallery([...imageGallery, ...respons.data.hits]);
+        setImageGallery(prevImageGallery => [
+          ...prevImageGallery,
+          ...respons.data.hits,
+        ]);
       } catch {
         Notiflix.Notify.failure("Sorry, it's error");
       } finally {
