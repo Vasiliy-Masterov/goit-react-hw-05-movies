@@ -4,19 +4,26 @@ import { useEffect } from 'react';
 
 export const Modal = ({ source, alt, closeModal }) => {
   useEffect(() => {
-    const handleKeyDown = event => {
-      if (event.code === 'Escape') {
-        closeModal();
-      }
-    };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [closeModal]);
+  });
+
+  const handleKeyDown = event => {
+    if (event.code === 'Escape') {
+      closeModal();
+    }
+  };
+
+  const handleBackdropClick = event => {
+    if (event.currentTarget === event.target) {
+      closeModal();
+    }
+  };
 
   return (
-    <div className={styles.Overlay} onClick={closeModal}>
+    <div className={styles.Overlay} onClick={handleBackdropClick}>
       <div className={styles.Modal}>
         <img className={styles.Modal_image} src={source} alt={alt} />
       </div>
